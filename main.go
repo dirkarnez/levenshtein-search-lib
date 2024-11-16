@@ -4,53 +4,52 @@ import (
 	"time"
 )
 
-func main() {
-	// Create a cache with a default expiration time of 5 minutes, and which
-	// purges expired items every 10 minutes
-	c := cache.New(5*time.Minute, 10*time.Minute)
+type User struct {
+  ID           uint           // Standard field for the primary key
+  Name         string         // A regular string field
+  Email        *string        // A pointer to a string, allowing for null values
+  Age          uint8          // An unsigned 8-bit integer
+}
 
-	// Set the value of the key "foo" to "bar", with the default expiration time
-	c.Set("foo", "bar", cache.DefaultExpiration)
+func main() {
+	users := []User{}
+	
+	// // Create a cache with a default expiration time of 5 minutes, and which
+	// // purges expired items every 10 minutes
+	// c := cache.New(5*time.Minute, 10*time.Minute)
+
+	// // Set the value of the key "foo" to "bar", with the default expiration time
+	// c.Set("users", "bar", cache.DefaultExpiration)
 
 	// Set the value of the key "baz" to 42, with no expiration time
 	// (the item won't be removed until it is re-set, or removed using
 	// c.Delete("baz")
-	c.Set("baz", 42, cache.NoExpiration)
+	c.Set("users", users, cache.NoExpiration)
 
 	// Get the string associated with the key "foo" from the cache
-	foo, found := c.Get("foo")
+	usersFound, found := c.Get("users")
 	if found {
-		fmt.Println(foo)
+		MyFunction(usersFound.([]User))
 	}
 
-	// Since Go is statically typed, and cache values can be anything, type
-	// assertion is needed when values are being passed to functions that don't
-	// take arbitrary types, (i.e. interface{}). The simplest way to do this for
-	// values which will only be used once--e.g. for passing to another
-	// function--is:
-	foo, found := c.Get("foo")
-	if found {
-		MyFunction(foo.(string))
-	}
-
-	// This gets tedious if the value is used several times in the same function.
-	// You might do either of the following instead:
-	if x, found := c.Get("foo"); found {
-		foo := x.(string)
-		// ...
-	}
-	// or
-	var foo string
-	if x, found := c.Get("foo"); found {
-		foo = x.(string)
-	}
-	// ...
+	// // This gets tedious if the value is used several times in the same function.
+	// // You might do either of the following instead:
+	// if x, found := c.Get("foo"); found {
+	// 	foo := x.(string)
+	// 	// ...
+	// }
+	// // or
+	// var foo string
+	// if x, found := c.Get("foo"); found {
+	// 	foo = x.(string)
+	// }
+	// // ...
 	// foo can then be passed around freely as a string
 
-	// Want performance? Store pointers!
-	c.Set("foo", &MyStruct, cache.DefaultExpiration)
-	if x, found := c.Get("foo"); found {
-		foo := x.(*MyStruct)
-			// ...
-	}
+	// // Want performance? Store pointers!
+	// c.Set("foo", &MyStruct, cache.DefaultExpiration)
+	// if x, found := c.Get("foo"); found {
+	// 	foo := x.(*MyStruct)
+	// 		// ...
+	// }
 }
