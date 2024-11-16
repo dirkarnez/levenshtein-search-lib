@@ -11,6 +11,9 @@ type User struct {
   Age          uint8          // An unsigned 8-bit integer
 }
 
+func Levenshtein () {
+	
+}
 func main() {
 	users := []User{}
 	
@@ -29,7 +32,15 @@ func main() {
 	// Get the string associated with the key "foo" from the cache
 	usersFound, found := c.Get("users")
 	if found {
-		MyFunction(usersFound.([]User))
+		Levenshtein(
+			usersFound.([]User), 
+			func (u *User) {
+				return u.Name
+			},
+			func (u *User) {
+				return u.Email
+			},
+		)
 	}
 
 	// // This gets tedious if the value is used several times in the same function.
