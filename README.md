@@ -4,6 +4,7 @@ levenshtein-search-lib
 - [ ] offload to async background IO, e.g. **smaller** binary indexed files stored in system `$TMP` (to eliminate network to database)
 - [ ] [**BK-tree - Wikipedia**](https://en.wikipedia.org/wiki/BK-tree)
 - [ ] monitor backend server and do indexing when it is low usage
+- [ ] should include throttling (search text box may send text fast)
 
 ### Cache libraries
 - [patrickmn/go-cache: An in-memory key:value store/cache (similar to Memcached) library for Go, suitable for single-machine applications.](https://github.com/patrickmn/go-cache)
