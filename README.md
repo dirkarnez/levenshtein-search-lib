@@ -10,6 +10,73 @@ levenshtein-search-lib
     - `1.0 - (levenshtein.ComputeDistance(searchString, data) / len(data) )`
       - the bracket should gives less then 0.3 -> let say "peter" for data, len is 5, 0.3 * 5 = 1.5, so the comparing should skip once it is larger than 1.5 
 
+### BK Tree
+```python
+class BKTreeNode:
+    def __init__(self, word):
+        self.word = word
+        self.children = {}
+
+def levenshtein_distance(s1, s2):
+    # Implementation of Levenshtein distance calculation
+    if len(s1) < len(s2):
+        return levenshtein_distance(s2, s1)
+
+    if len(s2) == 0:
+        return len(s1)
+
+    previous_row = range(len(s2) + 1)
+    for i, c1 in enumerate(s1):
+        current_row = [i + 1]
+        for j, c2 in enumerate(s2):
+            insertions = previous_row[j + 1] + 1
+            deletions = current_row[j] + 1
+            substitutions = previous_row[j] + (c1 != c2)
+            current_row.append(min(insertions, deletions, substitutions))
+        previous_row = current_row
+    return previous_row[-1]
+
+class BKTree:
+    def __init__(self):
+        self.root = None
+
+    def insert(self, word):
+        if not self.root:
+            self.root = BKTreeNode(word)
+        else:
+            self._insert_rec(self.root, word)
+
+    def _insert_rec(self, node, word):
+        distance = levenshtein_distance(node.word, word)
+        if distance in node.children:
+            self._insert_rec(node.children[distance], word)
+        else:
+            node.children[distance] = BKTreeNode(word)
+
+    def search(self, word, threshold):
+        results = []
+        self._search_rec(self.root, word, threshold, results)
+        return results
+
+    def _search_rec(self, node, word, threshold, results):
+        if node is None:
+            return
+        distance = levenshtein_distance(node.word, word)
+        if distance <= threshold:
+            results.append(node.word)
+        for d in range(max(0, distance - threshold), distance + threshold + 1):
+            if d in node.children:
+                self._search_rec(node.children[d], word, threshold, results)
+
+# Example usage
+bk_tree = BKTree()
+words = ["about", "above", "bought", "brought"]
+for word in words:
+    bk_tree.insert(word)
+
+matches = bk_tree.search("uo", 2)  # Searching for words within a Levenshtein distance of 2
+print(matches)
+```
 
 ### Cache libraries
 - [patrickmn/go-cache: An in-memory key:value store/cache (similar to Memcached) library for Go, suitable for single-machine applications.](https://github.com/patrickmn/go-cache)
