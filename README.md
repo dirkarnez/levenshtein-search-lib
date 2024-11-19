@@ -5,6 +5,11 @@ levenshtein-search-lib
 - [ ] [**BK-tree - Wikipedia**](https://en.wikipedia.org/wiki/BK-tree)
 - [ ] monitor backend server and do indexing when it is low usage
 - [ ] should include throttling (search text box may send text fast)
+- [ ] skip searching
+  - >= 70% match = if search key is shorter than the current data:
+    - `1.0 - (levenshtein.ComputeDistance(searchString, data) / len(data) )`
+      - the bracket should gives less then 0.3 -> let say "peter" for data, len is 5, 0.3 * 5 = 1.5, so the comparing should skip once it is larger than 1.5 
+
 
 ### Cache libraries
 - [patrickmn/go-cache: An in-memory key:value store/cache (similar to Memcached) library for Go, suitable for single-machine applications.](https://github.com/patrickmn/go-cache)
