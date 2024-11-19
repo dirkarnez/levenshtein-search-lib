@@ -10,6 +10,10 @@ levenshtein-search-lib
     - `1.0 - (levenshtein.ComputeDistance(searchString, data) / len(data) )`
       - the bracket should gives less then 0.3 -> let say "peter" for data, len is 5, 0.3 * 5 = 1.5, so the comparing should skip once it is larger than 1.5
 - [ ] [PostgreSQL: Documentation: 17: F.33. pg_trgm — support for similarity of text using trigram matching](https://www.postgresql.org/docs/current/pgtrgm.html)
+- [ ] [Levenshtein module — Levenshtein 0.23.0 documentation](https://rapidfuzz.github.io/Levenshtein/levenshtein.html)
+### Tutorials
+- [Understanding the Levenshtein Distance Equation for Beginners | by Ethan Nam | Medium](https://medium.com/@ethannam/understanding-the-levenshtein-distance-equation-for-beginners-c4285a5604f0)
+
 ### ChatGPT
 ```
 Yes, there are several established techniques and algorithms to make Levenshtein distance calculations faster and more efficient. Here are some of the most common methods:
