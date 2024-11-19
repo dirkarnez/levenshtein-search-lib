@@ -9,7 +9,41 @@ levenshtein-search-lib
   - >= 70% match = if search key is shorter than the current data:
     - `1.0 - (levenshtein.ComputeDistance(searchString, data) / len(data) )`
       - the bracket should gives less then 0.3 -> let say "peter" for data, len is 5, 0.3 * 5 = 1.5, so the comparing should skip once it is larger than 1.5 
+### ChatGPT
+```
+Yes, there are several established techniques and algorithms to make Levenshtein distance calculations faster and more efficient. Here are some of the most common methods:
 
+### 1. **Dynamic Programming Optimization**
+   - **Space Reduction**: The traditional dynamic programming approach uses a 2D matrix, which can consume a lot of memory. Instead, you can optimize this to use only two one-dimensional arrays (or even one) to store the current and previous row of distances, reducing space complexity from O(m*n) to O(min(m, n)), where `m` and `n` are the lengths of the two strings.
+
+### 2. **Early Exit**
+   - Implement an early exit condition where if the cost exceeds a certain threshold during the computation, you can terminate the algorithm early. This is particularly useful in applications like fuzzy searching where you only care about distances up to a certain limit.
+
+### 3. **Use of BK-Trees or Tries**
+   - As discussed, BK-trees are effective for organizing strings in a way that allows for quick approximate matching. By structuring your data with a BK-tree or a Trie, you can significantly reduce the number of Levenshtein distance calculations needed.
+
+### 4. **Approximate Matching with Hashing**
+   - Use techniques like **MinHash** or **SimHash** to create hashed representations of strings, allowing for quick similarity assessments. This can help narrow down potential matches before performing the more expensive Levenshtein calculation.
+
+### 5. **Parallelization**
+   - If you need to compute distances for multiple pairs of strings, consider parallelizing the calculations. Using multi-threading or distributed computing can significantly speed up processing time in large datasets.
+
+### 6. **Weighted Edit Distances**
+   - Instead of a simple edit distance, you can implement a weighted version where different operations (insertions, deletions, substitutions) have different costs. This can help prioritize certain matches and optimize the search space.
+
+### 7. **Memoization**
+   - If you are frequently calculating distances between the same pairs of strings, store previously computed distances in a cache (memoization) to avoid redundant calculations.
+
+### 8. **Use of Bitwise Operations**
+   - For small alphabets, you can use bitwise operations to represent characters and compute distances more quickly. This is especially useful in certain constrained problems.
+
+### 9. **Other Distance Metrics**
+   - Depending on your application, consider using alternative string similarity measures that may be faster to compute, such as Jaro-Winkler or Hamming distance (for fixed-length strings). These can sometimes provide sufficiently accurate results with lower computational overhead.
+
+### Conclusion
+
+By combining these methods, you can significantly improve the efficiency of Levenshtein distance calculations, making them more suitable for real-time applications or large datasets. The choice of optimization techniques will depend on your specific use case, including the size of the data, the frequency of queries, and the importance of accuracy versus speed.
+```
 ### BK Tree
 ```python
 class BKTreeNode:
