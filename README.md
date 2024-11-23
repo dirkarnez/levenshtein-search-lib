@@ -14,6 +14,7 @@ levenshtein-search-lib
 
 ### Indexing
 - [The ugrep file pattern searcher](https://ugrep.com/)
+- [Genivia/ugrep-indexer: A monotonic indexer to speed up grepping by >10x (ugrep-indexer is now part of ugrep 6.0)](https://github.com/Genivia/ugrep-indexer)
 
 ### Tutorials
 - [Understanding the Levenshtein Distance Equation for Beginners | by Ethan Nam | Medium](https://medium.com/@ethannam/understanding-the-levenshtein-distance-equation-for-beginners-c4285a5604f0)
